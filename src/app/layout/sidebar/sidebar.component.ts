@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { LayoutModule } from '../layout.module';
-import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-sidebar',

@@ -1,1 +1,67 @@
-<p>clubs-add-edit works!</p>
+<p>clubss-add-edit works!</p>
+<div mat-dialog-title>
+  <h1>{{ data ? "Update Club Details" : "Enter New Club Details" }}</h1>
+</div>
+<form [formGroup]="clubForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Club Name</mat-label>
+        <input matInput formControlName="clubname" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Address 1</mat-label>
+        <input matInput formControlName="add1" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Address 2</mat-label>
+        <input matInput formControlName="add2" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Address 3</mat-label>
+        <input matInput formControlName="add3" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Address 4</mat-label>
+        <input matInput formControlName="add4" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Postcode</mat-label>
+        <input matInput formControlName="postcode" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Website</mat-label>
+        <input matInput formControlName="website" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Contact Name</mat-label>
+        <input matInput formControlName="contactname" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Telephone</mat-label>
+        <input matInput formControlName="contacttel" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="contactemail" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div matDialogActions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>

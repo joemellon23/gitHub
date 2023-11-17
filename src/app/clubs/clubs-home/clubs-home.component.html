@@ -1,1 +1,101 @@
-<p>clubs-home works!</p>
+<!--
+<h2>The Season Number is</h2>
+
+ <mat-toolbar color="primary">
+  <span>Clubs Home</span>
+  <span class="example-spacer"></span>
+  <button mat-raised-button (click)="openAddEditClubForm()">Add Club</button>
+</mat-toolbar> -->
+
+<mat-form-field>
+  <mat-label>Search Clubs</mat-label>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="Enter search text"
+    #input
+  />
+</mat-form-field>
+<button mat-raised-button (click)="openAddEditClubForm()">Add Club</button>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="openEditClubForm(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteClub(row.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="clubname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Club Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.clubname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="add1">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address 1</th>
+      <td mat-cell *matCellDef="let row">{{ row.add1 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="add2">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>address 2</th>
+      <td mat-cell *matCellDef="let row">{{ row.add2 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="add3">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>address 3</th>
+      <td mat-cell *matCellDef="let row">{{ row.add3 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="add4">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>address 4</th>
+      <td mat-cell *matCellDef="let row">{{ row.add4 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="postcode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Postcode</th>
+      <td mat-cell *matCellDef="let row">{{ row.postcode }}</td>
+    </ng-container>
+    <ng-container matColumnDef="web">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Website</th>
+      <td mat-cell *matCellDef="let row">
+        <a href="{{ row.website }}" target="_blank">Website</a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="contactname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.contactname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="contacttel">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Tel</th>
+      <td mat-cell *matCellDef="let row">{{ row.contacttel }}</td>
+    </ng-container>
+    <ng-container matColumnDef="contactemail">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let row">{{ row.contactemail }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>

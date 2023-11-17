@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { League, LeagueService } from '../../services/league.service';
-import { LeagueAddEditComponent } from '../league-add-edit/league-add-edit.component';
+import { PlayerService, Player } from '../../services/player.service';
+
+import { PlayersAddEditComponent } from '../players-add-edit/players-add-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -14,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-leagues-home',
+  selector: 'app-players-home',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,53 +27,59 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
   ],
-  templateUrl: './leagues-home.component.html',
-  styleUrl: './leagues-home.component.scss',
+  templateUrl: './players-home.component.html',
+  styleUrl: './players-home.component.scss',
 })
-export class LeaguesHomeComponent {
-  displayedColumns: string[] = ['id', 'name', 'isactive', 'action'];
+export class PlayersHomeComponent {
+  displayedColumns: string[] = [
+    'id',
+    'firstname',
+    'lastname',
+    'fkteam',
+    'action',
+  ];
 
-  dataSource = new MatTableDataSource<League>([]);
+  dataSource = new MatTableDataSource<Player>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private _dialog: MatDialog,
-    private _leagueService: LeagueService //private _sharedService: SharedService
+    private _playerService: PlayerService //private _sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
-    this.getLeagueList();
+    this.getPlayerList();
   }
 
   openAddEditLeagueForm() {
-    const dialogRef = this._dialog.open(LeagueAddEditComponent);
+    const dialogRef = this._dialog.open(PlayersAddEditComponent);
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getLeagueList();
+          this.getPlayerList();
         }
       },
     });
-    //this.getLeagueList();
+    //this.getPlayerList();
   }
 
-  openEditLeagueForm(data: any) {
-    const dialogRef = this._dialog.open(LeagueAddEditComponent, {
+  openEditPlayerForm(data: any) {
+    const dialogRef = this._dialog.open(PlayersAddEditComponent, {
       data: data,
     });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getLeagueList();
+          this.getPlayerList();
         }
       },
     });
   }
 
-  getLeagueList() {
-    this._leagueService.getLeagueList().subscribe({
+  getPlayerList() {
+    this._playerService.getPlayerList().subscribe({
       next: (res) => {
         //console.log(res);
         this.dataSource = new MatTableDataSource(res);
@@ -86,12 +93,12 @@ export class LeaguesHomeComponent {
     });
   }
 
-  deleteLeague(id: number) {
-    this._leagueService.deleteLeague(id).subscribe({
+  deletePlayer(id: number) {
+    this._playerService.deletePlayer(id).subscribe({
       next: (res) => {
         //alert('League Deleted!')
         //this._sharedService.openSnackBar('League Deleted!','OK')
-        this.getLeagueList();
+        this.getPlayerList();
       },
       error: console.log,
     });

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './layout/header/header.component';
-import { LayoutModule } from './layout/layout.module';
+import { FooterComponent } from './layout/footer/footer.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -14,8 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     RouterOutlet,
-    LayoutModule,
+
     HeaderComponent,
+    SidebarComponent,
+    FooterComponent,
     MatSidenavModule,
 
     HttpClientModule,

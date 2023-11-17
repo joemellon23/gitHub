@@ -1,0 +1,108 @@
+<mat-form-field>
+  <mat-label>Search Matches</mat-label>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="Enter search text"
+    #input
+  />
+</mat-form-field>
+<button mat-raised-button (click)="openAddEditMatchForm()">Add Match</button>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fixturedate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fixture Date</th>
+      <td mat-cell *matCellDef="let row">{{ formatDate(row.fixturedate) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="playeddate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Played Date</th>
+      <td mat-cell *matCellDef="let row">{{ formatDate(row.playeddate) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fkhometeam">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Home Team</th>
+      <td mat-cell *matCellDef="let row">{{ row.fkhometeam }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fkawayteam">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Away Team</th>
+      <td mat-cell *matCellDef="let row">{{ row.fkawayteam }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isresult">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Result</th>
+      <td mat-cell *matCellDef="let row">{{ row.isresult }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="homeshots">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Home Shots</th>
+      <td mat-cell *matCellDef="let row">{{ row.homeshots }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="awayshots">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Away Shots</th>
+      <td mat-cell *matCellDef="let row">{{ row.awayshots }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="homepoints">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Home Points</th>
+      <td mat-cell *matCellDef="let row">{{ row.homepoints }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="awaypoints">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>away Points</th>
+      <td mat-cell *matCellDef="let row">{{ row.awaypoints }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="homerinkswon">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Home Rinks</th>
+      <td mat-cell *matCellDef="let row">{{ row.homerinkswon }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="awayrinkswon">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Away Rinks</th>
+      <td mat-cell *matCellDef="let row">{{ row.awayrinkswon }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="drawnrinks">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Drawn Rinks</th>
+      <td mat-cell *matCellDef="let row">{{ row.drawnrinks }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openEditMatchForm(row)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteMatch(row.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page"
+  ></mat-paginator>
+</div>

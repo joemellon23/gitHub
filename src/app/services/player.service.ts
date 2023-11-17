@@ -12,8 +12,21 @@ export class PlayerService {
     return this._http.post<string>('http://localhost:3000/api/players/', data);
   }
 
+  updatePlayer(id: number, data: any): Observable<string> {
+    return this._http.put<string>(
+      `http://localhost:3000/api/players/${id}`,
+      data
+    );
+  }
+
   getPlayerList(): Observable<Player[]> {
     return this._http.get<Player[]>('http://localhost:3000/api/players/');
+  }
+
+  deletePlayer(id: number): Observable<any> {
+    return this._http.delete<Player[]>(
+      `http://localhost:3000/api/players/${id}`
+    );
   }
 }
 

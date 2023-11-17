@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { League, LeagueService } from '../../services/league.service';
-import { LeagueAddEditComponent } from '../league-add-edit/league-add-edit.component';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MatchService, Match } from '../../services/match.service';
+
+import { MatchAddEditComponent } from '../match-add-edit/match-add-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -14,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-leagues-home',
+  selector: 'app-match-home',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,53 +27,68 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
   ],
-  templateUrl: './leagues-home.component.html',
-  styleUrl: './leagues-home.component.scss',
+  templateUrl: './match-home.component.html',
+  styleUrl: './match-home.component.scss',
 })
-export class LeaguesHomeComponent {
-  displayedColumns: string[] = ['id', 'name', 'isactive', 'action'];
+export class MatchHomeComponent {
+  displayedColumns: string[] = [
+    'id',
+    'fixturedate',
+    'playeddate',
+    'fkhometeam',
+    'fkawayteam',
+    'isresult',
+    'homeshots',
+    'awayshots',
+    'homepoints',
+    'awaypoints',
+    'homerinkswon',
+    'awayrinkswon',
+    'drawnrinks',
+    'action',
+  ];
 
-  dataSource = new MatTableDataSource<League>([]);
+  dataSource = new MatTableDataSource<Match>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private _dialog: MatDialog,
-    private _leagueService: LeagueService //private _sharedService: SharedService
+    private _matchService: MatchService
   ) {}
 
   ngOnInit(): void {
-    this.getLeagueList();
+    this.getMatchList();
   }
 
-  openAddEditLeagueForm() {
-    const dialogRef = this._dialog.open(LeagueAddEditComponent);
+  openAddEditMatchForm() {
+    const dialogRef = this._dialog.open(MatchAddEditComponent);
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getLeagueList();
+          this.getMatchList();
         }
       },
     });
-    //this.getLeagueList();
+    //this.getPlayerList();
   }
 
-  openEditLeagueForm(data: any) {
-    const dialogRef = this._dialog.open(LeagueAddEditComponent, {
+  openEditMatchForm(data: any) {
+    const dialogRef = this._dialog.open(MatchAddEditComponent, {
       data: data,
     });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getLeagueList();
+          this.getMatchList();
         }
       },
     });
   }
 
-  getLeagueList() {
-    this._leagueService.getLeagueList().subscribe({
+  getMatchList() {
+    this._matchService.getMatchList().subscribe({
       next: (res) => {
         //console.log(res);
         this.dataSource = new MatTableDataSource(res);
@@ -86,12 +102,12 @@ export class LeaguesHomeComponent {
     });
   }
 
-  deleteLeague(id: number) {
-    this._leagueService.deleteLeague(id).subscribe({
+  deleteMatch(id: number) {
+    this._matchService.deleteMatch(id).subscribe({
       next: (res) => {
         //alert('League Deleted!')
         //this._sharedService.openSnackBar('League Deleted!','OK')
-        this.getLeagueList();
+        this.getMatchList();
       },
       error: console.log,
     });
@@ -104,5 +120,10 @@ export class LeaguesHomeComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  formatDate(inDate: string) {
+    var datePipe = new DatePipe('en-US');
+    //var datePipe!: new DatePipe();
+    return datePipe.transform(inDate, 'dd/MM/yyyy hh:mm');
   }
 }
